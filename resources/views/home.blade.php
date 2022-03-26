@@ -1,40 +1,76 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" 
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
+    <style>
+        .header-title {
+            text-align: center;
+            padding: 10px;
+            margin: 0 auto;
+        }
+
+        .inner-section , .result-section{
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+        }
+
+        input[type="radio"] {
+            margin: 0 10px 0 10px;
+        }
+
+    </style>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div>
-            <p>Hello, Lets Play </p>
-        </div>
 
-        <form action="#">
-            @csrf
-            <div class="random-card-value">
-                <p> Random card is {{ $random_card_value }} </p>
-            </div>
+    <div class="container wrapper">
+        <div class="panel panel-primary" style="margin-top:15px">
+            <p class="header-title">Hello, Lets Play </p>
+        </div>
+        <div class="inner-section">
+            <form action="#">
+                @csrf
+                <div class="random-card-value">
+                    <p> Random card value is {{ $random_card_value }} </p>
+                </div>
+
+                <input type="hidden" class="card-value" value="{{ $random_card_value }}">
+                <div class="options">
+                    <input type="radio" name="card_guess" class="card_guess" id="higher" value="1">
+                    <label for="higher">Higher</label><br>
+                    <input type="radio" name="card_guess" class="card_guess" id="lower" value="0">
+                    <label for="lower">Lower</label><br>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary" id="submit">
+            </form>
+        </div>
+        <div class="result-section">
+            <h4>Your Stats </h4>
             <div class="win_stat">
                 Number of wins: {{ $win_stat }}
             </div>
             <div class="loss_stat">
                 Number of loses: {{ $loss_stat }}
             </div>
-            <input type="hidden" class="card-value" value="{{ $random_card_value }}">
-            <div class="options">
-                <input type="radio" name="card_guess" class="card_guess" id="higher" value="1">
-                <label for="html">Higher</label><br>
-                <input type="radio" name="card_guess" class="card_guess" id="lower" value="0">
-                <label for="css">Lower</label><br>
-            </div>
-            <input type="submit" value="Submit" id="submit">
-        </form>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
         crossorigin="anonymous"></script>
@@ -66,7 +102,7 @@
                         let randomCardDiv = ''
                         if (response.data.correct_counter > 0 && response.data.wins < 5) {
                             randomCardDiv =
-                                `Correct,the new random card number ${response.data.new_card_value}`
+                                `Correct,the new random card value is ${response.data.new_card_value}`
 
                         } else if (response.data.correct_counter > 0 && response.data.wins ===
                             5) {
