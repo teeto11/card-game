@@ -54,9 +54,9 @@ class Homecontroller extends Controller
             $incorrect_counter = session()->increment('incorrect_counter');
         }
 
-        if (($request->input == 0) && ($random_card_value > $request->card_value)) {
+        if (($request->input == 0) && ($random_card_value < $request->card_value)) {
             $correct_counter = session()->increment('correct_counter');
-        } else if (($request->input == 0) && ($random_card_value < $request->card_value)) {
+        } else if (($request->input == 0) && ($random_card_value > $request->card_value)) {
             $incorrect_counter = session()->increment('incorrect_counter');
         } else if (($request->input == 0) && ($random_card_value == $request->card_value)) {
             $incorrect_counter = session()->increment('incorrect_counter');
