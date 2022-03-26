@@ -115,7 +115,7 @@
                             $(".options").hide()
                             $("#submit").hide()
                             randomCardDiv =
-                                `Game over, start again, <a href="{{ url('/') }}">Start Again</a>`
+                                `Game over, <a href="{{ url('/') }}">Start Again</a>`
 
                         }
 
