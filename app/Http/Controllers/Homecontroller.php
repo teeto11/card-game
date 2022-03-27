@@ -63,6 +63,6 @@ class Homecontroller extends Controller
             "loses" => session()->get('incorrect_counter')
         ];
 
-        return response()->json(["msg" => [$request->input, $request->card_value], "data" => $data]);
+        return response()->json(["msg" => "success", "data" => $data]);
     }
 }
