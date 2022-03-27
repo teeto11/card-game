@@ -13,8 +13,7 @@ class Homecontroller extends Controller
         $random_card_value = $this->getRandomCardValue();
         $win_stat = 0;
         $loss_stat = 0;
-        $this->getLastSavedCardValue($random_card_value);
-        session()->put('correct_counter', 0);
+        session()->put('correct_counter', 4);
         session()->put('incorrect_counter', 0);
         return view('home', compact('random_card_value','win_stat','loss_stat'));
     }
