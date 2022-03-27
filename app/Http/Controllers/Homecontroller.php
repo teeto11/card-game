@@ -32,14 +32,7 @@ class Homecontroller extends Controller
         $random_card = $array_values[$random_numbers];
         return $random_card;
     }
-    public function getLastSavedCardValue($random_card_value)
-    {
-        $array_inputs = ["k"];
-        array_push($array_inputs, $random_card_value);
-        //    dd($array_inputs);
-        return $array_inputs;
-    }
-
+ 
     public function submitCardGuess(Request $request)
     {
         $correct_counter = 0;
