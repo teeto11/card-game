@@ -99,8 +99,13 @@
                         $(".random-card-value").empty()
                         $(".win_stat").empty()
                         $(".loss_stat").empty()
+                        let lossStatDiv = `Number of loses: 0`
+                        let winStatDiv = `Number of wins: 0`
+
                         let randomCardDiv = ''
                         if (response.data.correct_counter > 0 && response.data.wins < 5) {
+                            winStatDiv = `Number of wins: 0`
+                            lossStatDiv = `Number of loses: 1`
                             randomCardDiv =
                                 `Correct,the new random card value is ${response.data.new_card_value}`
 
@@ -108,24 +113,29 @@
                             5) {
                             $(".options").hide()
                             $("#submit").hide()
+                             winStatDiv = `Number of wins: 1`
+                             lossStatDiv = `Number of loses: 0`
                             randomCardDiv =
                                 `You have won the card game, <a href="{{ url('/') }}">Start Again</a>`
+                            
 
                         } else if (response.data.incorrect_counter > 0) {
+                             winStatDiv = `Number of wins: 0`
+                             lossStatDiv = `Number of loses: 1`
                             $(".options").hide()
                             $("#submit").hide()
+                          
                             randomCardDiv =
                                 `Game over, <a href="{{ url('/') }}">Start Again</a>`
 
                         }
 
-                        let winStatDiv = `Number of wins: ${ response.data.wins }`
-                        let lossStatDiv = `Number of loses: ${ response.data.loses }`
-
+                        
+                     
                         $(".random-card-value").append(randomCardDiv)
                         $(".card-value").val(`${response.data.new_card_value}`)
-                        $(".win_stat").append(winStatDiv)
                         $(".loss_stat").append(lossStatDiv)
+                        $(".win_stat").append(winStatDiv)
 
                     }
                 })
