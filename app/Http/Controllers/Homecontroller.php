@@ -29,11 +29,20 @@ class Homecontroller extends Controller
 
         $random_numbers = rand(0, 51);
         $random_card = $array_values[$random_numbers];
+        array_splice($array_values,$random_numbers,1);
+       if(count($array_values) < 1){
+           return "no cards left";
+       }
         return $random_card;
     }
  
     public function submitCardGuess(Request $request)
     {
+        $this->validate($request,[
+         'card_value' => 'required|integer',
+         'input' => 'required|integer',
+        ]);
+
         $correct_counter = 0;
         $incorrect_counter = 0;
         $random_card_value = $this->getRandomCardValue();
@@ -62,6 +71,6 @@ class Homecontroller extends Controller
             "loses" => session()->get('incorrect_counter')
         ];
 
-        return response()->json(["msg" => "success", "data" => $data]);
+        return response()->json(["msg" => "success","data" => $data]);
     }
 }
