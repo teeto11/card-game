@@ -10,11 +10,13 @@ class Homecontroller extends Controller
 
     public function home()
     {
-        $random_card_value = $this->getRandomCardValue();
-        $win_stat = 0;
-        $loss_stat = 0;
+        $random_card_value = $this->getRandomCardValue();   
         session()->put('correct_counter', 0);
         session()->put('incorrect_counter', 0);
+        session()->put('remainder', 51);
+        $win_stat = 0;
+        $loss_stat = 0; 
+
         return view('home', compact('random_card_value','win_stat','loss_stat'));
     }
 
@@ -30,7 +32,8 @@ class Homecontroller extends Controller
         $random_numbers = rand(0, 51);
         $random_card = $array_values[$random_numbers];
         array_splice($array_values,$random_numbers,1);
-       if(count($array_values) < 1){
+        $remainder = session()->get('remainder');
+       if($remainder < 1){
            return "no cards left";
        }
         return $random_card;
@@ -39,13 +42,14 @@ class Homecontroller extends Controller
     public function submitCardGuess(Request $request)
     {
         $this->validate($request,[
-         'card_value' => 'required|integer',
+         'card_value' => 'required',
          'input' => 'required|integer',
         ]);
 
         $correct_counter = 0;
         $incorrect_counter = 0;
         $random_card_value = $this->getRandomCardValue();
+         session()->decrement('remainder');
 
         if (($request->input == 1) && ($random_card_value > $request->card_value)) {
             $correct_counter = session()->increment('correct_counter');
@@ -68,9 +72,10 @@ class Homecontroller extends Controller
             "correct_counter" => $correct_counter,
             "incorrect_counter" => $incorrect_counter,
             "wins" => session()->get('correct_counter'),
-            "loses" => session()->get('incorrect_counter')
+            "loses" => session()->get('incorrect_counter'),
+            "remainder" => session()->get('remainder')
         ];
 
-        return response()->json(["msg" => "success","data" => $data]);
+        return response()->json(["msg" => "success","count"=>2,"data" => $data]);
     }
 }
