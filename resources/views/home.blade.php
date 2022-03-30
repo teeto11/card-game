@@ -105,7 +105,7 @@
                         let randomCardDiv = ''
                         if (response.data.correct_counter > 0 && response.data.wins < 5) {
                             winStatDiv = `Number of wins: 0`
-                            lossStatDiv = `Number of loses: 1`
+                            lossStatDiv = `Number of loses: 0`
                             randomCardDiv =
                                 `Correct,the new random card value is ${response.data.new_card_value}`
 
