@@ -33,7 +33,7 @@ class Homecontroller extends Controller
         $random_card = $array_values[$random_numbers];
         array_splice($array_values,$random_numbers,1);
         $remainder = session()->get('remainder');
-       if($remainder < 1){
+       if($remainder == 0){
            return "no cards left";
        }
         return $random_card;
@@ -48,9 +48,9 @@ class Homecontroller extends Controller
 
         $correct_counter = 0;
         $incorrect_counter = 0;
+        session()->decrement('remainder');
         $random_card_value = $this->getRandomCardValue();
-         session()->decrement('remainder');
-
+        
         if (($request->input == 1) && ($random_card_value > $request->card_value)) {
             $correct_counter = session()->increment('correct_counter');
         } else if (($request->input == 1) && ($random_card_value < $request->card_value)) {
